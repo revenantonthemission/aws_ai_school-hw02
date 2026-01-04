@@ -55,24 +55,7 @@ class StatisticsAnalyzer:
         stats = self.get_winning_statistics()
         freq_analysis = self.get_frequency_analysis()
         
-        report = f"""
-{'='*60}
-시뮬레이션 결과 요약
-{'='*60}
-
-기본 통계:
-  - 총 라운드: {stats['total_rounds']:,}회
-  - 구매 티켓: {stats['total_tickets']:,}장
-  - 당첨 티켓: {stats['total_winning_tickets']:,}장
-  - 당첨 확률: {stats['winning_rate']:.2f}%
-
-수익 분석:
-  - 총 투자액: {stats['total_spent']:,}원
-  - 총 당첨금: {stats['total_won']:,}원
-  - 순손익: {stats['net_profit']:+,}원
-
-등급별 당첨 현황:
-"""
+        report = f"{'='*60}\n시뮬레이션 결과 요약\n{'='*60}\n\n기본 통계:\n  - 총 라운드: {stats['total_rounds']:,}회\n  - 구매 티켓: {stats['total_tickets']:,}장\n  - 당첨 티켓: {stats['total_winning_tickets']:,}장\n  - 당첨 확률: {stats['winning_rate']:.2f}%\n\n수익 분석:\n  - 총 투자액: {stats['total_spent']:,}n  - 총 당첨금: {stats['total_won']:,}원\n  - 순손익: {stats['net_profit']:+,}원\n\n등급별 당첨 현황:"
         
         for rank in sorted(freq_analysis.keys()):
             info = freq_analysis[rank]
@@ -82,8 +65,8 @@ class StatisticsAnalyzer:
         
         return report
     
+    # 통계 초기화
     def reset(self):
-        """통계 초기화"""
         self.total_spent = 0
         self.total_won = 0
         self.winning_frequency = {}
