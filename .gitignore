@@ -14,3 +14,4 @@ venv/
 
 # testing
 tests/
+.mypy_cache/
