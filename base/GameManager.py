@@ -114,8 +114,8 @@ class GameManager:
         self.ui_manager.show_round_result(round_result)
         self.ui_manager.input_handler.wait_for_enter()
         
+    # 현재 상태 및 통계 표시
     def _show_current_stats(self):
-        """현재 상태 및 통계 표시"""
         self.ui_manager.output_handler.clear_screen()
         stats = self.statistics_analyzer.get_winning_statistics()
         
@@ -129,13 +129,9 @@ class GameManager:
         print("="*40)
         
         self.ui_manager.input_handler.wait_for_enter()
-        
+    
+    # 게임 종료 시 통계 출력하기
     def _show_final_report(self):
-        """게임 종료 시 최종 리포트"""
         report = self.statistics_analyzer.generate_summary_report()
-        user_info = f"""
-게임 종료 결과:
-  - 최종 잔액: {self.user.get_balance():,}원
-  - 순손익: {self.user.get_net_profit():+,}원
-"""
+        user_info = f"게임 종료 결과:\n- 최종 잔액: {self.user.get_balance():,}원\n- 순손익: {self.user.get_net_profit():+,}원\n"
         self.ui_manager.show_final_statistics({}, user_info + report)
