@@ -4,6 +4,7 @@ from games.Lotto645 import Lotto645
 from games.PowerballLottery import PowerballLottery
 from base.GameManager import GameManager
 from ui.UIManager import UIManager
+from factory.GameFactory import GameFactory
 from Logger import Logger
 import logging
 import asyncio
@@ -47,39 +48,46 @@ class LottoApp:
             
             # 게임 종료하기
             if game_choice == 0:
-                self._logger.info("굿바이 메시지 출력")
-                self.ui_manager.show_goodbye()
-                self._logger.info("게임 종료됨")
+                self.exit_application()
                 break
             
-            # 게임 초기화하기
-            if game_choice == 1:
-                self._logger.info("6/45 로또 게임 진입")
-                self.current_game = Lotto645()
-            elif game_choice == 2:
-                self._logger.info("파워볼 로터리 진입")
-                self.current_game = PowerballLottery()
-            elif game_choice == 3:
-                self._logger.info("로그 출력 진입")
-                game_logger = Logger("logs")
-                asyncio.run(game_logger.print_every_log())
+            # 로그 출력하기
+            if game_choice == 3:
+                self.show_logs()
                 break
-            else:
+
+            self.current_game = GameFactory.create_game(game_choice)
+
+            if self.current_game is None:
                 self.ui_manager.show_error("올바르지 않은 선택입니다.")
                 continue
             
+            if not self.run_game_session():
+                break
+                
+            if not self.confirm_continue():
+                break
+
+    def exit_application(self):
+        self._logger.info("굿바이 메시지 출력")
+        self.ui_manager.show_goodbye()
+        self._logger.info("게임 종료됨")
+    
+    def show_logs(self):
+        self._logger.info("로그 출력 진입")
+        game_logger = Logger("logs")
+        asyncio.run(game_logger.print_every_log())
+
+    def run_game_session(self) -> bool:
+        try:
             # 게임 정보 표시
             self._logger.info("현재 게임 정보 표시")
-            try:
-                self.ui_manager.show_game_info(self.current_game)
-            except Exception as e:
-                print(f"There is no game: {e}")
-                break
-            
+            self.ui_manager.show_game_info(self.current_game)
+
             # 초기 자금 설정
             self._logger.info("초기 자금 설정")
             budget = self.ui_manager.input_handler.get_initial_budget()
-            
+
             # 게임 매니저 생성 및 실행
             self._logger.info("게임 매니저 생성 및 실행")
             self.game_manager = GameManager(
@@ -87,17 +95,26 @@ class LottoApp:
                 initial_budget=budget,
                 ui_manager=self.ui_manager
             )
-            
+
+            # 메인 루프 진입
             self._logger.info("게임 진입")
             self.game_manager.run_game_loop()
-            
-            # 계속 여부 확인
-            self._logger.info("다른 게임을 계속할 건지 묻기")
-            if not self.ui_manager.confirm("\n다른 게임을 하시겠습니까?"):
-                self._logger.info("굿바이 메시지 출력")
-                self.ui_manager.show_goodbye()
-                self._logger.info("게임 종료됨")
-                break
+
+            return True
+
+        except Exception as e:
+            print(f"게임 실행 중 오류 발생: {e}")
+            self._logger.error(f"게임 실행 중 오류: {e}")
+            return False
+        
+    def confirm_continue(self) -> bool:
+        # 계속 여부 확인
+        self._logger.info("다른 게임을 계속할 건지 묻기")
+        if not self.ui_manager.confirm("\n다른 게임을 하시겠습니까?"):
+            self.exit_application()
+            return False
+        return True
+
 
 
 # 메인 함수
