@@ -28,7 +28,7 @@ class OutputHandler:
         }
         
         prefix = styles.get(style, '')
-        logging.debug("f"{prefix}{message}"")
+        logging.debug(f"{prefix}{message}")
         print(f"{prefix}{message}")
     
     # 티켓 정보 출력
