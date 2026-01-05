@@ -1,15 +1,14 @@
 # 로그 담당 클래스
-import asyncio
-import pathlib
+from pathlib import Path
 
 class Logger:
     
     def __init__(self, dir_name: str):
         self._directory = dir_name
         self._encoding_list: list[str] = ['utf-8','cp949','utf-16']
-        self._log_path = pathlib.Path(dir_name)
+        self._log_path = Path(dir_name)
     
-    def get_log(self, filename: str):
+    def get_log(self, filename: Path):
         for i in range(len(self._encoding_list)):
             with open(filename, "rt", encoding=self._encoding_list[i]) as file:
                 try:
@@ -19,7 +18,7 @@ class Logger:
                     print(f"There was an error while reading the game log: {e}")
                     pass
     
-    async def print_log(self, filename: str):
+    async def print_log(self, filename: Path):
         log_generator = self.get_log(filename)
         while True:
             try:
@@ -34,5 +33,5 @@ class Logger:
         try:    
             for file in dir_iter:
                 await self.print_log(file)
-        except:
-            print("There is something wrong")
+        except Exception as e:
+            print(f"There is something wrong: {e}")
