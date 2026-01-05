@@ -8,7 +8,6 @@ from prize.PrizeStructure import PrizeStructure
 from prize.PrizeRank import PrizeRank
 from prize.DrawingMachine import DrawingMachine
 import logging
-from Logger import Logger
 
 # 파워볼 게임
 class PowerballLottery(NumberBasedLottery):
@@ -19,10 +18,10 @@ class PowerballLottery(NumberBasedLottery):
         self._logger.setLevel(logging.DEBUG)
         
         if not self._logger.handlers:
-            file_handler = logging.FileHandler(f"logs\\{__name__}.log", mode='w')
+            file_handler = logging.FileHandler(f"logs/{__name__}.log", mode='w')
             #file_handler.setLevel(logging.INFO)
 
-            log_formatter = logging.Formatter("%(funcname)s : %(asctime)s - %(levelname)s - %(message)s")
+            log_formatter = logging.Formatter("%(funcName)s : %(asctime)s - %(levelname)s - %(message)s")
             file_handler.setFormatter(log_formatter)
             self._logger.addHandler(file_handler)
         

@@ -1,6 +1,5 @@
 # 게임 관리자 클래스
 
-from typing import Optional
 from base.GameController import GameController
 from base.StatisticsAnalyzer import StatisticsAnalyzer
 from games.LotteryGame import LotteryGame
@@ -16,10 +15,10 @@ class GameManager:
         self._logger.setLevel(logging.DEBUG)
         
         if not self._logger.handlers:
-            file_handler = logging.FileHandler(f"logs\\{__name__}.log", mode='w')
+            file_handler = logging.FileHandler(f"logs/{__name__}.log", mode='w')
             #file_handler.setLevel(logging.INFO)
 
-            log_formatter = logging.Formatter("%(funcname)s : %(asctime)s - %(levelname)s - %(message)s")
+            log_formatter = logging.Formatter("%(funcName)s : %(asctime)s - %(levelname)s - %(message)s")
             file_handler.setFormatter(log_formatter)
             self._logger.addHandler(file_handler)
         

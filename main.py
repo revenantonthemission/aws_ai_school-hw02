@@ -5,7 +5,9 @@ from games.PowerballLottery import PowerballLottery
 from base.GameManager import GameManager
 from ui.UIManager import UIManager
 from Logger import Logger
-import logging, asyncio
+import logging
+import asyncio
+import os
 import traceback
 
 # 로또 어플리케이션
@@ -15,12 +17,13 @@ class LottoApp:
         # 로거 객체 직접 사용
         self._logger = logging.getLogger(__name__)
         self._logger.setLevel(logging.DEBUG)
+        os.makedirs("logs", exist_ok=True)
         
         if not self._logger.handlers:
-            file_handler = logging.FileHandler(f"logs\\{__name__}.log", mode='w')
+            file_handler = logging.FileHandler(f"logs/{__name__}.log", mode='w')
             #file_handler.setLevel(logging.INFO)
 
-            log_formatter = logging.Formatter("%(funcname)s : %(asctime)s - %(levelname)s - %(message)s")
+            log_formatter = logging.Formatter("%(funcName)s : %(asctime)s - %(levelname)s - %(message)s")
             file_handler.setFormatter(log_formatter)
             self._logger.addHandler(file_handler)
 
@@ -54,11 +57,11 @@ class LottoApp:
                 self._logger.info("6/45 로또 게임 진입")
                 self.current_game = Lotto645()
             elif game_choice == 2:
-                self._+logger.info("파워볼 로터리 진입")
+                self._logger.info("파워볼 로터리 진입")
                 self.current_game = PowerballLottery()
             elif game_choice == 3:
                 self._logger.info("로그 출력 진입")
-                game_logger = Logger("log")
+                game_logger = Logger("logs")
                 asyncio.run(game_logger.print_every_log())
                 break
             else:

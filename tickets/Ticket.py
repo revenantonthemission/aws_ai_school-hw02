@@ -1,6 +1,7 @@
 # 추상 티켓 클래스
 from abc import ABC, abstractmethod
 from datetime import datetime
+from typing import List
 import uuid
 
 # 모든 종류의 티켓이 상속하는 클래스
@@ -18,7 +19,7 @@ class Ticket(ABC):
     
     # 티켓 번호 반환하기
     @abstractmethod
-    def get_numbers(self):
+    def get_numbers(self) -> List[int]:
         pass
     
     # 티켓에 대한 정보를 문자열로 변환하기

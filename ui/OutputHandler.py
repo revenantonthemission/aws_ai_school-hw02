@@ -2,7 +2,6 @@
 
 import os
 import time
-import logging, Logger
 from typing import List, Dict
 from tickets.Ticket import Ticket
 
@@ -106,7 +105,7 @@ class OutputHandler:
             print("=" * width + "\n")
         except Exception as e:
             print("\n" + "=" * width)
-            print("NO GAME".center(width))
+            print(f"{e}".center(width))
             print("=" * width + "\n")
     
     # 구분선 출력

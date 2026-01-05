@@ -17,4 +17,4 @@ tests/
 .mypy_cache/
 
 # logs
-log/
+logs/

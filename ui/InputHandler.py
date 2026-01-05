@@ -1,7 +1,6 @@
 # 입력 처리 클래스
 
 from typing import Optional, List
-import logging
 
 # 사용자 입력을 처리하는 클래스
 class InputHandler:
