@@ -8,7 +8,7 @@ import logging
 class PrizeStructure:
     
     def __init__(self):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("상금 구조 객체 생성")
         self.prize_ranks: List[PrizeRank] = []
         self.total_pool = 0

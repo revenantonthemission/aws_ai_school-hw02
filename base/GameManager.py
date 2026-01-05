@@ -11,7 +11,7 @@ import logging
 class GameManager:
     
     def __init__(self, game: LotteryGame, initial_budget: int, ui_manager):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("게임 매니저 객체 생성")
         self.game = game
         self.ui_manager = ui_manager

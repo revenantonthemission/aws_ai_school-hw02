@@ -9,7 +9,7 @@ import logging
 class UIManager:
     
     def __init__(self):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("UI 관리자 객체 생성")
         self.input_handler = InputHandler()
         self.output_handler = OutputHandler()

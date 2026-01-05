@@ -8,7 +8,7 @@ import logging
 class PowerballTicket(LotteryTicket):
     
     def __init__(self, main_numbers: List[int], powerball_number: int):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("파워볼 티켓 객체 생성")
 
         # 메인 번호와 파워볼 번호를 하나의 리스트로 결합

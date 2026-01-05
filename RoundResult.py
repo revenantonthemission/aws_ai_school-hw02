@@ -8,7 +8,7 @@ import logging
 class RoundResult:
 
     def __init__(self, round_number: int, drawn_numbers: dict):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("RoundResult 객체 생성")
         self.round_number = round_number
         self.drawn_numbers = drawn_numbers

@@ -2,7 +2,7 @@
 
 import os
 import time
-import logging
+import logging, Logger
 from typing import List, Dict
 from tickets.Ticket import Ticket
 
@@ -17,7 +17,7 @@ class OutputHandler:
     # 메시지 출력
     @staticmethod
     def print_message(message: str, style: str = 'normal'):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("메시지 출력")
         styles = {
             'normal': '',
@@ -34,14 +34,14 @@ class OutputHandler:
     # 티켓 정보 출력
     @staticmethod
     def print_ticket(ticket: Ticket):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug(f"티켓 정보: {ticket.to_string()}")
         print(f"  {ticket.to_string()}")
     
     # 티켓 목록 출력
     @staticmethod
     def print_tickets(tickets: List[Ticket]):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("티켓 목록 출력")
         logging.debug(f"\n구매한 티켓 ({len(tickets)}장):")
         print(f"\n구매한 티켓 ({len(tickets)}장):")
@@ -52,7 +52,7 @@ class OutputHandler:
     # 추첨 결과 출력
     @staticmethod
     def print_draw_result(numbers: dict, game_name: str):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("티켓 결과 출력")
         print("\n추첨 결과:")
         
@@ -69,7 +69,7 @@ class OutputHandler:
     # 테이블 형식 출력
     @staticmethod
     def print_table(data: List[List], headers: List[str]):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("테이블 형식 출력")
 
         # 각 열의 최대 너비 계산
@@ -95,7 +95,7 @@ class OutputHandler:
     # 애니메이션 표시
     @staticmethod
     def show_animation(animation_type: str):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("애니메이션 표시")
         if animation_type == 'drawing':
             print("\n추첨 중", end="")
@@ -117,24 +117,29 @@ class OutputHandler:
     # 위아래에 바(=) 출력
     @staticmethod
     def print_header(title: str):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("위아래에 바(=) 출력")
         width = 60
-        print("\n" + "=" * width)
-        print(title.center(width))
-        print("=" * width + "\n")
+        try:
+            print("\n" + "=" * width)
+            print(title.center(width))
+            print("=" * width + "\n")
+        except Exception as e:
+            print("\n" + "=" * width)
+            print("NO GAME".center(width))
+            print("=" * width + "\n")
     
     # 구분선 출력
     @staticmethod
     def print_separator(char: str = "-", length: int = 60):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("구분선 출력")
         print(char * length)
     
     # 당첨 결과 출력
     @staticmethod
     def print_winning_result(rank: int, prize: int):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("당첨 결과 출력")
         if rank > 0:
             print(f"  {rank}등 당첨! 상금: {prize:,}원")
@@ -144,14 +149,14 @@ class OutputHandler:
     # 잔액 출력
     @staticmethod
     def print_balance(balance: int):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("잔액 출력")
         print(f"\n현재 잔액: {balance:,}원")
     
     # 통계 출력
     @staticmethod
     def print_statistics(stats: Dict):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("통계 출력")
         print("\n" + "="*60)
         print("통계 정보")
@@ -173,7 +178,7 @@ class OutputHandler:
     # 진행 바 출력
     @staticmethod
     def print_progress_bar(current: int, total: int, bar_length: int = 40):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("진행 바 출력")
         progress = current / total
         filled = int(bar_length * progress)
@@ -184,3 +189,10 @@ class OutputHandler:
         
         if current == total:
             print()  # 완료 시 줄바꿈
+    """
+    @staticmethod
+    def print_log(filename: str):
+        game_logger = Logger("log/game_log.log")
+        game_logger.get_log()
+        game_logger.print_log()
+    """

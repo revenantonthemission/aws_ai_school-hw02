@@ -12,7 +12,7 @@ import logging
 class Lotto645(NumberBasedLottery):
     
     def __init__(self):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("6/45 로또 게임 객체 생성")
         super().__init__(
             name="로또 6/45",

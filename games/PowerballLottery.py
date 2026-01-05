@@ -12,7 +12,7 @@ from prize.DrawingMachine import DrawingMachine
 class PowerballLottery(NumberBasedLottery):
     
     def __init__(self):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("파워볼 로터리 게임 객체 생성")
         super().__init__(
             name="파워볼",

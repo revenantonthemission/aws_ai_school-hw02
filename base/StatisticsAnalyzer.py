@@ -8,7 +8,7 @@ import logging
 class StatisticsAnalyzer:
     
     def __init__(self):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("통계 분석기 객체 생성")
         self.total_spent = 0
         self.total_won = 0
@@ -63,7 +63,7 @@ class StatisticsAnalyzer:
         stats = self.get_winning_statistics()
         freq_analysis = self.get_frequency_analysis()
         
-        report = f"{'='*60}\n시뮬레이션 결과 요약\n{'='*60}\n\n기본 통계:\n  - 총 라운드: {stats['total_rounds']:,}회\n  - 구매 티켓: {stats['total_tickets']:,}장\n  - 당첨 티켓: {stats['total_winning_tickets']:,}장\n  - 당첨 확률: {stats['winning_rate']:.2f}%\n\n수익 분석:\n  - 총 투자액: {stats['total_spent']:,}n  - 총 당첨금: {stats['total_won']:,}원\n  - 순손익: {stats['net_profit']:+,}원\n\n등급별 당첨 현황:"
+        report = f"{'='*60}\n시뮬레이션 결과 요약\n{'='*60}\n\n기본 통계:\n  - 총 라운드: {stats['total_rounds']:,}회\n  - 구매 티켓: {stats['total_tickets']:,}장\n  - 당첨 티켓: {stats['total_winning_tickets']:,}장\n  - 당첨 확률: {stats['winning_rate']:.2f}%\n\n수익 분석:\n  - 총 투자액: {stats['total_spent']:,}\n  - 총 당첨금: {stats['total_won']:,}원\n  - 순손익: {stats['net_profit']:+,}원\n\n등급별 당첨 현황:"
         
         for rank in sorted(freq_analysis.keys()):
             info = freq_analysis[rank]

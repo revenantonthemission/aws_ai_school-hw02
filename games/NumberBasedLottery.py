@@ -11,7 +11,7 @@ class NumberBasedLottery(LotteryGame):
     def __init__(self, name: str, ticket_price: int, 
                  min_number: int, max_number: int, 
                  numbers_to_pick: int, has_bonus: bool = False):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("숫자 기반 로또 게임 객체 생성")
         super().__init__(name, ticket_price)
         self.min_number = min_number

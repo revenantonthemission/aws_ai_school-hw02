@@ -10,7 +10,7 @@ import logging
 class GameController:
     
     def __init__(self, game: LotteryGame, user: User):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("게임 컨트롤러 객체 생성")
         self.game = game
         self.user = user

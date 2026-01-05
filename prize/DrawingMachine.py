@@ -9,7 +9,7 @@ class DrawingMachine:
     
     def __init__(self, min_number: int, max_number: int, numbers_to_draw: int,
                  has_bonus: bool = False):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("로또 추첨 기계 객체 생성")
         self.min_number = min_number
         self.max_number = max_number

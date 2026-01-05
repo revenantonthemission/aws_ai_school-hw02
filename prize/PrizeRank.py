@@ -7,7 +7,7 @@ class PrizeRank:
  
     def __init__(self, rank: int, match_count: int, bonus_required: bool = False, 
                  prize_amount: int = 0):
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("당첨 순위 객체 생성")
         self.rank = rank
         self.match_count = match_count

@@ -9,28 +9,29 @@ class InputHandler:
     # 게임 선택하기
     @staticmethod
     def get_game_selection() -> int:
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("게임 선택하기")
         while True:
             try:
                 print("\n게임을 선택하세요:")
                 print("1. 로또 6/45")
                 print("2. 파워볼")
+                print("3. 로그 보기")
                 print("0. 종료")
                 
-                choice = int(input("\n선택 (0-2): ").strip())
+                choice = int(input("\n선택 (0-3): ").strip())
                 
-                if 0 <= choice <= 2:
+                if 0 <= choice <= 3:
                     return choice
                 else:
-                    print("[오류] 올바른 번호를 입력하세요 (0-2)")
+                    print("[오류] 올바른 번호를 입력하세요 (0-3)")
             except ValueError:
                 print("[오류] 숫자를 입력하세요")
     
     # 초기 자금 입력
     @staticmethod
     def get_initial_budget() -> int:
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("초기 자금 입력")
         while True:
             try:
@@ -44,7 +45,7 @@ class InputHandler:
     # 게임 시작/상태 확인/게임 종료 중 하나를 선택
     @staticmethod
     def get_main_menu_action() -> int:
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("게임 시작/상태 확인/게임 종료 중 하나를 선택")
         print("\n" + "="*40)
         print("메인 메뉴")
@@ -65,7 +66,7 @@ class InputHandler:
     # 구매 방식 선택
     @staticmethod
     def get_purchase_type() -> str:
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("구매 방식 선택")
         print("\n구매 방식을 선택하세요:")
         print("1. 자동 (랜덤 생성)")
@@ -99,7 +100,7 @@ class InputHandler:
     @staticmethod
     def get_numbers(count: int, min_num: int, max_num: int, 
                    manual: bool = False, prompt_msg: Optional[str] = None) -> Optional[List[int]]:
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("수동으로 번호 입력하기")
         if not manual:
             return None
@@ -135,7 +136,7 @@ class InputHandler:
     # 사용자가 올바르게 선택을 했는지 확인하기
     @staticmethod
     def confirm_action(message: str) -> bool:
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("사용자가 올바르게 선택했는지 확인하기")
         while True:
             response = input(f"{message} (y/n): ").strip().lower()
@@ -148,7 +149,7 @@ class InputHandler:
     # 사용자의 입력이 유효한지 검증하기
     @staticmethod
     def validate_input(input_value: str, input_type: str) -> bool:
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("사용자의 입력이 유효한지 검증하기")
         if input_type == 'int':
             try:
@@ -166,6 +167,6 @@ class InputHandler:
     # 엔터키가 들어올 때까지 대기
     @staticmethod
     def wait_for_enter():
-        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.basicConfig(filename="log/game_log.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
         logging.debug("엔터키가 들어올 때까지 대기")
         input("\n계속하려면 Enter를 누르세요...")
