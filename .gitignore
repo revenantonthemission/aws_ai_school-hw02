@@ -15,3 +15,6 @@ venv/
 # testing
 tests/
 .mypy_cache/
+
+# logs
+log/

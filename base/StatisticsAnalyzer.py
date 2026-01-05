@@ -2,11 +2,14 @@
 
 from typing import List, Dict
 from RoundResult import RoundResult
+import logging
 
 # 시뮬레이션 통계 분석
 class StatisticsAnalyzer:
     
     def __init__(self):
+        logging.basicConfig(filename="log/game_log.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
+        logging.debug("통계 분석기 객체 생성")
         self.total_spent = 0
         self.total_won = 0
         self.winning_frequency: Dict[int, int] = {}  # {등급: 횟수}
@@ -14,16 +17,19 @@ class StatisticsAnalyzer:
     
     # 라운드 결과 기록
     def record_round(self, round_result: RoundResult):
+        logging.debug("한 라운드 결과 기록하기")
         self.round_results.append(round_result)
         self.total_spent += round_result.total_spent
         self.total_won += round_result.total_won
         
-        # 등급별 당첨 빈도 업데이트
+        # 등수별 당첨 빈도 업데이트
+        logging.debug("등수별 당첨 빈도 업데이트")
         for rank, count in round_result.get_winning_count_by_rank().items():
             self.winning_frequency[rank] = self.winning_frequency.get(rank, 0) + count
         
     # 당첨 통계 반환
     def get_winning_statistics(self) -> Dict:
+        logging.debug("당첨 통계 반환")
         total_tickets = sum(r.tickets_purchased for r in self.round_results)
         total_winning_tickets = sum(len(r.winning_tickets) for r in self.round_results)
         
@@ -40,6 +46,7 @@ class StatisticsAnalyzer:
     
     # 등수별 상세 분석
     def get_frequency_analysis(self) -> Dict[int, Dict]:
+        logging.debug("등수별 상세 분석")
         analysis = {} 
         for rank, count in self.winning_frequency.items():
             total_rounds = len(self.round_results)
@@ -52,6 +59,7 @@ class StatisticsAnalyzer:
     
     # 요약 레포트 생성
     def generate_summary_report(self) -> str:
+        logging.debug("요약 레포트 생성")
         stats = self.get_winning_statistics()
         freq_analysis = self.get_frequency_analysis()
         
@@ -67,6 +75,7 @@ class StatisticsAnalyzer:
     
     # 통계 초기화
     def reset(self):
+        logging.debug("통계 초기화")
         self.total_spent = 0
         self.total_won = 0
         self.winning_frequency = {}
