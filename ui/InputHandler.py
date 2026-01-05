@@ -9,8 +9,6 @@ class InputHandler:
     # 게임 선택하기
     @staticmethod
     def get_game_selection() -> int:
-        logging.basicConfig(filename="log/inputhandler.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
-        logging.debug("게임 선택하기")
         while True:
             try:
                 print("\n게임을 선택하세요:")
@@ -31,8 +29,6 @@ class InputHandler:
     # 초기 자금 입력
     @staticmethod
     def get_initial_budget() -> int:
-        logging.basicConfig(filename="log/inputhandler.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
-        logging.debug("초기 자금 입력")
         while True:
             try:
                 budget = int(input("\n초기 자금 (원, 기본: 100000): ").strip() or "100000")
@@ -45,8 +41,6 @@ class InputHandler:
     # 게임 시작/상태 확인/게임 종료 중 하나를 선택
     @staticmethod
     def get_main_menu_action() -> int:
-        logging.basicConfig(filename="log/inputhandler.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
-        logging.debug("게임 시작/상태 확인/게임 종료 중 하나를 선택")
         print("\n" + "="*40)
         print("메인 메뉴")
         print("="*40)
@@ -66,8 +60,6 @@ class InputHandler:
     # 구매 방식 선택
     @staticmethod
     def get_purchase_type() -> str:
-        logging.basicConfig(filename="log/inputhandler.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
-        logging.debug("구매 방식 선택")
         print("\n구매 방식을 선택하세요:")
         print("1. 자동 (랜덤 생성)")
         print("2. 수동 (번호 직접 입력)")
@@ -86,7 +78,6 @@ class InputHandler:
     # 티켓 구매 개수 입력하기
     @staticmethod
     def get_ticket_count() -> int:
-        logging.debug("티켓 구매 개수 입력하기")
         while True:
             try:
                 count = int(input("구매할 티켓 수: ").strip())
@@ -100,8 +91,6 @@ class InputHandler:
     @staticmethod
     def get_numbers(count: int, min_num: int, max_num: int, 
                    manual: bool = False, prompt_msg: Optional[str] = None) -> Optional[List[int]]:
-        logging.basicConfig(filename="log/inputhandler.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
-        logging.debug("수동으로 번호 입력하기")
         if not manual:
             return None
         
@@ -136,8 +125,6 @@ class InputHandler:
     # 사용자가 올바르게 선택을 했는지 확인하기
     @staticmethod
     def confirm_action(message: str) -> bool:
-        logging.basicConfig(filename="log/inputhandler.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
-        logging.debug("사용자가 올바르게 선택했는지 확인하기")
         while True:
             response = input(f"{message} (y/n): ").strip().lower()
             if response in ['y', 'yes', '예']:
@@ -149,8 +136,6 @@ class InputHandler:
     # 사용자의 입력이 유효한지 검증하기
     @staticmethod
     def validate_input(input_value: str, input_type: str) -> bool:
-        logging.basicConfig(filename="log/inputhandler.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
-        logging.debug("사용자의 입력이 유효한지 검증하기")
         if input_type == 'int':
             try:
                 int(input_value)
@@ -167,6 +152,4 @@ class InputHandler:
     # 엔터키가 들어올 때까지 대기
     @staticmethod
     def wait_for_enter():
-        logging.basicConfig(filename="log/inputhandler.log", filemode="at", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
-        logging.debug("엔터키가 들어올 때까지 대기")
         input("\n계속하려면 Enter를 누르세요...")

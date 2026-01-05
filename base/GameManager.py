@@ -11,20 +11,31 @@ import logging
 class GameManager:
     
     def __init__(self, game: LotteryGame, initial_budget: int, ui_manager):
-        logging.basicConfig(filename="log/gamemanager.log", filemode="w", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG)
-        logging.debug("게임 매니저 객체 생성")
+        # 로거 객체 직접 사용
+        self._logger = logging.getLogger(__name__)
+        self._logger.setLevel(logging.DEBUG)
+        
+        if not self._logger.handlers:
+            file_handler = logging.FileHandler(f"logs\\{__name__}.log", mode='w')
+            #file_handler.setLevel(logging.INFO)
+
+            log_formatter = logging.Formatter("%(funcname)s : %(asctime)s - %(levelname)s - %(message)s")
+            file_handler.setFormatter(log_formatter)
+            self._logger.addHandler(file_handler)
+        
+        self._logger.info("게임 매니저 객체 생성")
         self.game = game
         self.ui_manager = ui_manager
         
         # 사용자 및 컨트롤러 설정
-        logging.debug("사용자 및 컨트롤러 설정")
+        self._logger.debug("사용자 및 컨트롤러 설정")
         self.user = User("Player", initial_budget)
         self.game_controller = GameController(game, self.user)
         self.statistics_analyzer = StatisticsAnalyzer()
     
     # 게임의 주요 루프
     def run_game_loop(self):
-        logging.debug("주요 루프 진입")
+        self._logger.info("주요 루프 진입")
         self.game_controller.initialize_game()
         self.statistics_analyzer.reset()
         
@@ -35,39 +46,41 @@ class GameManager:
         
         while True:
             # 메뉴 표시 및 선택
-            logging.debug("메뉴 표시 및 선택")
+            self._logger.info("메뉴 표시 및 선택")
             action = self.ui_manager.input_handler.get_main_menu_action()
             
             if action == 0:  # 종료
-                logging.debug("메뉴 종료")
+                self._logger.debug("메뉴 종료")
                 break
                 
             elif action == 1:  # 티켓 구매
-                logging.debug("티켓 구매")
+                self._logger.debug("티켓 구매")
                 self._handle_purchase_round()
                 
             elif action == 2:  # 통계 확인
-                logging.debug("통계 확인")
+                self._logger.debug("통계 확인")
                 self._show_current_stats()
         
         # 최종 통계 표시
-        logging.debug("최종 통계 표시")
+        self._logger.debug("최종 통계 표시")
         self._show_final_report()
     
     # 구매부터 추첨까지 한 라운드 진행하기
     def _handle_purchase_round(self):
+        self._logger.info("한 라운드 진행하기")
+
         # 구매 방식 선택 (자동/수동)
-        logging.debug("구매 방식 선택")
+        self._logger.debug("구매 방식 선택")
         purchase_type = self.ui_manager.input_handler.get_purchase_type()
         
         # 티켓 수 입력
-        logging.debug("티켓 수 입력")
+        self._logger.debug("티켓 수 입력")
         count = self.ui_manager.input_handler.get_ticket_count()
         
         # 수동 번호 입력 (필요 시)
         manual_numbers = []
         if purchase_type == 'manual':
-            logging.debug("수동으로 번호 입력")
+            self._logger.debug("수동으로 번호 입력")
             self.ui_manager.show_message(f"\n{count}장의 티켓 번호를 입력해주세요.")
             
             for i in range(count):
@@ -76,7 +89,7 @@ class GameManager:
                 
                 # Powerball 처리
                 if self.game.name == "파워볼":
-                    logging.debug("파워볼 게임 처리")
+                    self._logger.debug("파워볼 게임 처리")
                     main = self.ui_manager.input_handler.get_numbers(
                         count=5, 
                         min_num=1, 
@@ -95,7 +108,7 @@ class GameManager:
                         manual_numbers.append(main + power)
                 else:
                     # 일반 로또
-                    logging.debug("6/45 로또 게임 처리")
+                    self._logger.debug("6/45 로또 게임 처리")
                     numbers = self.ui_manager.input_handler.get_numbers(
                         count=self.game.numbers_to_pick,
                         min_num=getattr(self.game, 'min_number', 1),
@@ -106,7 +119,7 @@ class GameManager:
                         manual_numbers.append(numbers)
         
         # 티켓 구매 처리
-        logging.debug("티켓 구매 처리")
+        self._logger.debug("티켓 구매 처리")
         success = self.game_controller.process_ticket_purchase(
             count=count,
             strategy=purchase_type,
@@ -114,31 +127,31 @@ class GameManager:
         )
         
         if not success:
-            logging.debug("잔액 부족")
+            self._logger.debug("잔액 부족")
             self.ui_manager.show_error("잔액이 부족합니다!")
             return
             
         # 추첨 및 결과 표시
-        logging.debug("추첨 중...")
+        self._logger.debug("추첨 중...")
         self.ui_manager.output_handler.show_animation('drawing')
         drawn_numbers = self.game_controller.conduct_draw()
         
-        logging.debug("확인 중...")
+        self._logger.debug("확인 중...")
         self.ui_manager.output_handler.show_animation('checking')
         round_result = self.game_controller.check_and_settle_winnings(drawn_numbers)
         
         # 통계 기록
-        logging.debug("통계 기록")
+        self._logger.debug("통계 기록")
         self.statistics_analyzer.record_round(round_result)
         
         # 결과 표시
-        logging.debug("결과 표시")
+        self._logger.debug("결과 표시")
         self.ui_manager.show_round_result(round_result)
         self.ui_manager.input_handler.wait_for_enter()
         
     # 현재 상태 및 통계 표시
     def _show_current_stats(self):
-        logging.debug("현재 상태 및 통계 표시")
+        self._logger.debug("현재 상태 및 통계 표시")
         self.ui_manager.output_handler.clear_screen()
         stats = self.statistics_analyzer.get_winning_statistics()
         
@@ -155,7 +168,7 @@ class GameManager:
     
     # 게임 종료 시 통계 출력하기
     def _show_final_report(self):
-        logging.debug("게임 종료 시 통계 출력하기")
+        self._logger.info("게임 종료 시 통계 출력하기")
         report = self.statistics_analyzer.generate_summary_report()
         user_info = f"게임 종료 결과:\n- 최종 잔액: {self.user.get_balance():,}원\n- 순손익: {self.user.get_net_profit():+,}원\n"
         self.ui_manager.show_final_statistics({}, user_info + report)
