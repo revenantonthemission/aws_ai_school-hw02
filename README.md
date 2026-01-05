@@ -1,11 +1,18 @@
 # AWS AI School 2주차 과제
 
+## 설계도
+
+### 초기 설계도
+
+![설계도](./docs/aischool_02_concept.drawio.png)
+
 ## 프로젝트 구성
 
 - base: 게임 관리를 위한 모듈
     - GameController.py: 게임 컨트롤러 클래스
     - GameManager.py: 게임 관리자 클래스
     - StatisticsAnalyzer.py: 게임 결과 분석 클래스
+- docs: 문서에 필요한 파일이 모여있는 폴더
 - games: 게임 클래스 모듈
     - LotteryGame.py: 로터리 게임 클래스
     - Lotto645.py: 6/45 로또 게임 클래스
